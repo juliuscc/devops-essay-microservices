@@ -1,14 +1,95 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
-\title{devops-essay-microservices}
-\author{Julius Celik \and Patric Ridell}
-\date{April 2019}
+\usepackage[
+	citestyle=ieee, 
+    bibstyle=ieee,
+    style=numeric-comp,
+]{biblatex}
+    
+\addbibresource{ref.bib}
+
+
+\title{The necessity of Microservices in a DevOps environment}
+\author{
+{Julius Celik}\\
+\textit{
+    jcelik@kth.se
+} \and {Patric Ridell}\\
+\textit{
+    pridell@kth.se
+}}
+\date{\today{}}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
 
 \begin{document}
 
 \maketitle
 
+% 10 Tech Challenges That Are Solved by Microservices
+% https://medium.com/containerum/10-tech-challenges-that-are-solved-by-microservices-d91adeecb2e7
+
 \section{Introduction}
+Microservices is a software development method, where systems are divided into smaller parts, called microservices, that can be individually deployed. In turn, this enables high decoupling, high coupling, and strong composibility. The microservices are focused on performing single tasks really good, and implementing functionality by composing multiple microservices. It also enables multiple developers to work on a common codebase while minimizing obstruction, which becomes more notable in larger systems, with more developers.
+
+\textbf{Conways law}
+
+Microservices are a reflection of agile organizational structures. Agile development has become the industry norm for software development \cite{Jeremiah}. This means that companies organize their software developers in smaller teams of usually four to eight developers, where the teams have full life cycle ownership of the software they write. To divide monolith systems into decoupled services that can be independently deployed by the teams become a natural development in that work environment.
+
+The opposite of microservice is often called monoliths. Monoliths is a whole system implemented as a single application. This means that the system is always handled as a single entity, which in practice means that the whole system has to be running to perform integration tests on parts of the system, and the whole application is duplicated when the system is scaled with a distributed manner.
+
+% The problem with monoliths
+% https://smartbear.com/solutions/microservices/
+
+
+\section{Benefits of microservices within DevOps}
+% The difficulties of using a CI on a large monolith. Every change triggers a rebuild/retest of everything
+In a monolith application, there is an ever increasing difficulty for \textit{Continuous Integration} (CI). With every small modification of the codebase, one might have to build and deploy an entire new version of the application \cite{Jeremiah}. This section will explore how microservices tackle this problem and in what ways they enable CI, a foundation of DevOps. We will see that in most cases, DevOps and microservices go hand-in-hand and augment each others functionality.
+
+\subsection{Microservices enable individual deployments}
+% All or nothing deployments. Individual deployments
+At the core of microservices is modularity; doing one specific task really well. A consequence of the modular nature of microservices is the possibility of individual deployments. For some people it is a fundamental requirement of microservices \cite{Newman2015}.
+
+\textbf{A one-line change to a million-line-long monolith application requires the whole application to be deployed in order to release the change.}\cite[p.~6]{Newman2015}
+
+\subsubsection{Large-impact and high-risk deployments}
+The difficulty of releasing a monolith creates multiple problems. One problem is that the deployments become larger and take longer time. It is also more difficult to deploy a large monolith compared to a microservice. \citeauthor{Newman2015} highlights the potential for such a deployment to be \textit{large-impact} and \textit{high-risk}. \citeauthor{Newman2015} claims that this leads to deployments happening infrequently due to understandable fear. This leads to larger changes between releases, which develops a higher risk for something wrong to be released. \cite[p.~6]{Newman2015}
+
+Infrequent deployments lead to larger software-deltas and longer feedback loops. When something wrong happens it is difficult to understand why it is wrong because it might have been a long time since the change was implemented, and there might be many changes since the last release.
+
+\subsubsection{Fault management and automation}
+Another problem that is related to releasing monoliths is the ability to use rollbacks, and the use of \textit{Continuous Deployment} (CD). For the reasons mentioned above it is difficult and often impossible to use CD, and when a faulty system is released, it is often difficult to rollback the system to a previous stable version.
+
+With microservices it is easy to release every minor update of the service, and to release often. It is therefore very easy to automate releases with CD's as well as managing releases with canary releases, where the update is only deployed on a small percentage of the servers, or exposed to a small percentage of users, and predefined metrics are verified to be sufficient before deploying the change to all of the servers. Canary releases require a measurable goal to be defined, like all requests to a service should be responded to within 500ms. With a microservice one or a few metrics can be defined and measured for every microservice. For a monolith that would require a very large amount of metrics to be measured, which would be difficult to both maintain and measure.
+
+
+\subsection{Quicker feedback loops with fine grained modular testing}
+% Quicker testing of parts of system. Feedback loop.
+Decreasing the time between the releases of new features is a highly valuable trait within the DevOps development cycle. Microservices enable this through quicker feedback loops that allow testing of smaller and more specific parts of the system.
+
+When testing a monolith parts of the application can not be mocked, which means that even to test a part of the system, the whole system has to be initiated. This leads to large overhead for smaller integration tests, and also difficulties in testing parts of the system.
+
+One benefit of using microservices is that tests can be performed quicker, which enables a quicker feedback loop. The other benefit is that parts of the system only can be unit tested, or not tested at all. To test parts of a system, with integration tests, is crucial to maintain high quality software, and to align with DevOps methods.
+
+\subsection{Scalability}
+% Automatic scalability
+The architecture used within an application can either work as a bottleneck on the growth of the application or be a tool that enables expansion. Although it is certainly possible to maintain a large monolith system, there a definitely easier and more effective ways. To scale a monolith service, every part of it has to be scaled simultaneously \cite{Newman2015}. Microservices allows a developer to prepare for future expansion by making the architecture more scalable. A developer can scale a specific service where it is needed, while leaving others unchanged \cite{Newman2015}.
+
+
+\section{Potential pitfalls}
+
+% Distribution is difficult
+% Changing the architecture is painful
+% Bad patterns like high coupling can magnify old problems with orders of magnitude
+
+\section{Conclusion}
+% Why microservices are essential to DevOps
+Although there are some potential risks that a developer should be aware of when using microservices, they are far outweighed by the possibilities microservices bring. A major factor in staying competitive in any IT-related field is being \textit{first}. The early bird gets the worm. Being able to reduce time in-between iterations and quickly adapt to a changing business environment is essential for the longevity of all companies. Using microservices in a DevOps environment will increase the likelihood of sustainable growth and at the same time increase competitiveness.
+
+
+\newpage
+\printbibliography
 
 \end{document}
